@@ -1,7 +1,30 @@
+import { buttonClasses } from "../classes/button";
+import { signIn } from "next-auth/react";
+
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-9xl font-black">hi there</h1>
-    </div>
+    <>
+      <nav className="absolute p-6">
+        <h3 className="text-xl font-semibold">🌲 Evergreen</h3>
+      </nav>
+      <div className="flex h-screen items-center justify-center">
+        <div className="space-y-8">
+          <h1 className="max-w-2xl text-center text-4xl font-black">
+            Organic, local, and home-grown food in your{" "}
+            <span className="text-accent">community</span>
+          </h1>
+          <div className="flex justify-center">
+            <button
+              onClick={() => {
+                signIn("google");
+              }}
+              className={buttonClasses}
+            >
+              Get started
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
