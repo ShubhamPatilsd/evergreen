@@ -37,27 +37,34 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="mt-10 space-y-8 px-10 pb-6">
+      <div className="mt-10 space-y-8 px-10 pb-2">
         <h1 className="mx-auto max-w-2xl text-center text-3xl font-black">
           Organic, local, and home-grown food in{" "}
           {/* TODO: dynamic data this later */}
-          <span className="text-accent">Pleasanton</span> within{" "}
-          <input
-            type="number"
-            min="0.1"
-            max="5.0"
-            step="0.1"
-            onChange={(e) => {
-              setRadius(parseFloat(e.target.value));
-            }}
-            value={radius}
-            className="w-auto max-w-md rounded-lg bg-transparent px-1 py-1 text-right text-accent"
-          />{" "}
-          miles
+          within <span className="text-accent">{radius}</span> miles of you.
         </h1>
 
+        <div className="justify-left flex">
+          <div>
+            <p className="font-bold">Radius</p>
+            <div className="flex items-center space-x-2">
+              <p>0.1</p>
+              <input
+                type="range"
+                min="0.1"
+                max="5.0"
+                step="0.1"
+                onChange={(e) => {
+                  setRadius(parseFloat(e.target.value));
+                }}
+                value={radius}
+                className="max-w-msm rounded-lg bg-transparent px-1 py-1 text-right text-accent"
+              />{" "}
+              <p>5.0</p>
+            </div>
+          </div>
+        </div>
         {/* {`${location?.latitude}, ${location?.longitude}`} */}
-
         {/* <div className="inline-flex w-full items-center space-x-4 rounded-xl border-2 border-accent bg-[#f1fcf6] p-4">
           <p className="font-black">{radius} miles</p>
 
