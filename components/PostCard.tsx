@@ -50,14 +50,17 @@ export const PostCard: React.FC<PostCardProps> = ({
               {price}
             </div>
             <div className="translate absolute bottom-2 left-2 inline-flex w-auto rounded-full bg-white px-4 py-1 font-black text-black">
-              {convertDistance(getDistance(userLocation, coords), "mi") < 1
+              {userLocation &&
+              convertDistance(getDistance(userLocation, coords), "mi") < 1
                 ? Math.trunc(
                     convertDistance(getDistance(userLocation, coords), "ft")
                   )
-                : Math.trunc(
+                : userLocation &&
+                  Math.trunc(
                     convertDistance(getDistance(userLocation, coords), "mi")
                   )}{" "}
-              {convertDistance(getDistance(userLocation, coords), "mi") < 1
+              {userLocation &&
+              convertDistance(getDistance(userLocation, coords), "mi") < 1
                 ? "ft"
                 : "mi"}
             </div>
