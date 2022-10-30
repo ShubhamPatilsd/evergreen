@@ -5,6 +5,7 @@ import { Navbar } from "../../components/Navbar";
 import { authOptions } from "../api/auth/[...nextauth]";
 import prisma from "../../lib/prismadb";
 import { useRouter } from "next/router";
+import ReactGoogleAutocomplete from "react-google-autocomplete";
 
 export const CreatePost = () => {
   const [name, setName] = useState("");
@@ -13,6 +14,9 @@ export const CreatePost = () => {
   const [sellerLocation, setSellerLocation] = useState("");
   const router = useRouter();
   // const [] = useState("");
+  const [formattedName, setFormattedName] = useState<string>("");
+  const [latitude, setLatitude] = useState<string>("");
+  const [longitude, setLongitude] = useState<string>("");
 
   return (
     <div className="space-y-10">
@@ -55,14 +59,20 @@ export const CreatePost = () => {
           <label htmlFor="location" className="font-bold">
             Pickup Location
           </label>
-          <input
-            type={"text"}
-            name="location"
-            onChange={(e) => {
-              setSellerLocation(e.target.value);
-            }}
+
+          <ReactGoogleAutocomplete
             placeholder="5353 Sunol Blvd, Pleasanton"
-            className="appearance-none rounded-lg border-2 border-gray-100 px-4 py-3 placeholder-gray-300  focus:outline-none focus:ring-2 focus:ring-accent"
+            className="appearance-none rounded-lg border-2 border-gray-100 px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-accent"
+            apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}
+            onPlaceSelected={(place) => {
+              setFormattedName(place.formatted_address);
+              setLatitude(place.geometry.location.lat);
+              setLongitude(place.geometry.location.lng);
+            }}
+            defaultValue={formattedName}
+            options={{
+              types: ["geocode", "establishment"],
+            }}
           />
         </div>
         <div className="flex flex-col">
@@ -96,6 +106,9 @@ export const CreatePost = () => {
                 description,
                 price,
                 sellerLocation,
+                longitude,
+                formattedName,
+                latitude,
               };
               await fetch(`/api/post/create`, {
                 method: "POST",

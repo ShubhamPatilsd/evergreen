@@ -66,16 +66,16 @@ model User {
 
 model Post {
   id          String   @id @default(cuid())
-  posted      DateTime @default(now())
-  location    Location @relation(fields: [locationId], references: [id])
-  city        String
-  image       String
-  description String
-  price       String
-  author      User     @relation(fields: [userId], references: [id])
-  userId      String
-  name        String
-  locationId  String
+  posted      DateTime? @default(now())
+location      Location? @relation(fields: [locationId], references: [id])
+  city        String?
+  image       String?
+  description String?
+  price       String?
+  author      User?     @relation(fields: [userId], references: [id])
+  userId      String?
+  name        String?
+  locationId  String?
 }
 
 model VerificationToken {
