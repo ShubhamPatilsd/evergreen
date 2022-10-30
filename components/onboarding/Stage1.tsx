@@ -29,7 +29,7 @@ export const Stage1: React.FC<{
           placeholder="San Francisco, California"
           className="appearance-none rounded-lg border-2 border-gray-100 px-4 py-3 placeholder-gray-300  focus:outline-none focus:ring-2 focus:ring-accent"
           apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}
-          onPlaceSelected={(place) => setLocation(place)}
+          onPlaceSelected={(place) => setLocation(place.formatted_address)}
           defaultValue={location}
           options={{
             types: ["geocode", "establishment"],

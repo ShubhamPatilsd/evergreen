@@ -7,7 +7,12 @@ export const Navbar = () => {
 
   return (
     <div className="flex items-center justify-between px-4 py-2">
-      <h3 className="text-2xl font-semibold text-accent">evergreen</h3>
+      <h3
+        className="text-2xl font-semibold text-accent hover:cursor-pointer"
+        onClick={() => router.push("/home")}
+      >
+        evergreen
+      </h3>
       <div className="flex items-center space-x-4">
         <button
           className="rounded-lg bg-accent px-4 py-1 font-bold text-white transition hover:bg-accent-darker"

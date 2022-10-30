@@ -32,6 +32,7 @@ export default function Onboarding() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+
       await router.push("/home");
     } catch (error) {
       console.error(error);
