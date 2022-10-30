@@ -18,10 +18,13 @@ export const PostCard: React.FC<PostCardProps> = ({
       <div>
         <div
           style={{
-            background: `url(${"https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg"}) no-repeat`,
-            maxWidth: "300px",
-            backgroundSize: "100%",
-            maxHeight: "300px",
+            background: `url(${image}) no-repeat`,
+            width: "300px",
+            backgroundPosition: "50% 50%",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            backgroundColor: "black",
+            height: "300px",
           }}
           className="relative rounded-xl"
         >

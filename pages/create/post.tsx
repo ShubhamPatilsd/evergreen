@@ -4,12 +4,14 @@ import { useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { authOptions } from "../api/auth/[...nextauth]";
 import prisma from "../../lib/prismadb";
+import { useRouter } from "next/router";
 
 export const CreatePost = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [sellerLocation, setSellerLocation] = useState("");
+  const router = useRouter();
   // const [] = useState("");
 
   return (
@@ -83,23 +85,28 @@ export const CreatePost = () => {
         </div>
         <button
           onClick={async () => {
-            if (!parseFloat(price)) {
-              //TODO: react toastify
-              console.log("goofy agh", price);
-              return;
+            try {
+              if (!parseFloat(price)) {
+                //TODO: react toastify
+                console.log("goofy agh", price);
+                return;
+              }
+              console.log("i am here");
+              const body = {
+                name,
+                description,
+                price,
+                sellerLocation,
+              };
+              await fetch(`/api/post/create`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              });
+              router.push("/");
+            } catch (err) {
+              //TODO: add toast here
             }
-            console.log("i am here");
-            const body = {
-              name,
-              description,
-              price,
-              sellerLocation,
-            };
-            await fetch(`/api/post/create`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
           }}
           className="w-full rounded-lg bg-accent py-4 font-semibold text-white transition hover:bg-accent-darker"
         >

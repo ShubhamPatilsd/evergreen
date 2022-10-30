@@ -27,7 +27,7 @@ const Home = () => {
           {/* TODO: dynamic data this later */}
           <span className="text-accent">Pleasanton</span>
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-10">
           {posts
             ? posts.length > 0
               ? posts.map((post, i) => {
