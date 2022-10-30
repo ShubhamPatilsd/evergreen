@@ -1,3 +1,6 @@
+import { GiPlantSeed } from "react-icons/gi";
+import { RiPlantFill } from "react-icons/ri";
+
 export const Stage2: React.FC<{
   userType: "gardener" | "consumer";
   setUserType: any;
@@ -19,7 +22,7 @@ export const Stage2: React.FC<{
           onClick={() => setUserType("gardener")}
         >
           <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white p-3 text-center shadow-lg">
-            <i className="fas fa-sitemap"></i>
+            <GiPlantSeed color={"#0D986A"} size={30} />
           </div>
           <h6 className="mb-1 text-xl font-semibold">Gardener</h6>
           <p className="mb-4 text-gray-500">
@@ -34,7 +37,7 @@ export const Stage2: React.FC<{
           onClick={() => setUserType("consumer")}
         >
           <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white p-3 text-center shadow-lg">
-            <i className="fas fa-sitemap"></i>
+            <RiPlantFill color={"#0D986A"} size={30} />
           </div>
           <h6 className="mb-1 text-xl font-semibold">Consumer</h6>
           <p className="mb-4 text-gray-500">
