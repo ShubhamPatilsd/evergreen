@@ -3,9 +3,22 @@ import ReactGoogleAutocomplete from "react-google-autocomplete";
 export const Stage1: React.FC<{
   name: string;
   setName: any;
-  location: string;
-  setLocation: any;
-}> = ({ name, setName, location, setLocation }: any) => {
+  longitude: string;
+  latitude: string;
+  formattedName: string;
+  setFormattedName: any;
+  setLatitude: any;
+  setLongitude: any;
+}> = ({
+  name,
+  setName,
+  longitude,
+  latitude,
+  formattedName,
+  setFormattedName,
+  setLongitude,
+  setLatitude,
+}) => {
   return (
     <div className="space-y-10 p-10">
       <div className="space-y-5 text-center">
@@ -29,8 +42,12 @@ export const Stage1: React.FC<{
           placeholder="San Francisco, California"
           className="appearance-none rounded-lg border-2 border-gray-100 px-4 py-3 placeholder-gray-300  focus:outline-none focus:ring-2 focus:ring-accent"
           apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}
-          onPlaceSelected={(place) => setLocation(place.formatted_address)}
-          defaultValue={location}
+          onPlaceSelected={(place) => {
+            setFormattedName(place.formatted_address);
+            setLatitude(place.geometry.location.lat);
+            setLongitude(place.geometry.location.lng);
+          }}
+          defaultValue={formattedName}
           options={{
             types: ["geocode", "establishment"],
           }}

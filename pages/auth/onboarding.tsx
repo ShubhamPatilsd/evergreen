@@ -6,16 +6,20 @@ import prisma from "../../lib/prismadb";
 import { Stage1 } from "../../components/onboarding/Stage1";
 import { Stage2 } from "../../components/onboarding/Stage2";
 import { useRouter } from "next/router";
+import { getSession, useSession } from "next-auth/react";
 
 export default function Onboarding() {
   const [stage, setStage] = useState<number>(1);
   const [name, setName] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
+  const [formattedName, setFormattedName] = useState<string>("");
+  const [latitude, setLatitude] = useState<string>("");
+  const [longitude, setLongitude] = useState<string>("");
   const [userType, setUserType] = useState<"gardener" | "consumer">("gardener");
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleNext = () => {
-    if (stage === 1 && name && location) {
+    if (stage === 1 && name && formattedName) {
       setStage(stage + 1);
     } else {
       //TODO: toast
@@ -23,10 +27,17 @@ export default function Onboarding() {
     }
   };
 
+  console.log(latitude, longitude, formattedName);
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { name, userType, location };
+      const body = {
+        name,
+        userType,
+        latitude,
+        longitude,
+        formattedName,
+      };
       await fetch(`/api/user`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,8 +63,12 @@ export default function Onboarding() {
           <Stage1
             name={name}
             setName={setName}
-            location={location}
-            setLocation={setLocation}
+            longitude={longitude}
+            latitude={latitude}
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+            setFormattedName={setFormattedName}
+            formattedName={formattedName}
           />
         )}
 

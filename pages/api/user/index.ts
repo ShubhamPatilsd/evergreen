@@ -7,10 +7,8 @@ export default async function Handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { name, userType, location } = req.body;
+  const { name, userType, latitude, longitude, formattedName } = req.body;
   const session = await unstable_getServerSession(req, res, authOptions);
-
-  console.log(session?.user);
 
   if (session) {
     const result = await prisma.user.update({
@@ -19,9 +17,22 @@ export default async function Handle(
       },
       data: {
         name: name,
-        location: location,
         userType: userType,
         onboarded: true,
+      },
+      include: {
+        location: true,
+      },
+    });
+
+    await prisma.location.create({
+      data: {
+        latitude: latitude,
+        longitude: longitude,
+        formatted_name: formattedName,
+        User: {
+          connect: [{ email: session?.user?.email || "" }],
+        },
       },
     });
     res.json(result);
