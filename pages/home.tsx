@@ -16,7 +16,7 @@ interface LocationProps {
 const Home = () => {
   const [posts, setPosts] = useState<any[]>();
   const [radius, setRadius] = useState(1.2);
-  const [location, setLocation] = useState<LocationProps | null>();
+  const [userLocation, setUserLocation] = useState<LocationProps | null>();
 
   useEffect(() => {
     (async () => {
@@ -26,7 +26,7 @@ const Home = () => {
 
       navigator.geolocation.getCurrentPosition((position) => {
         console.log(position);
-        setLocation({
+        setUserLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
@@ -86,10 +86,10 @@ const Home = () => {
             ? posts.length > 0
               ? posts
                   .filter((post) => {
-                    if (location) {
+                    if (userLocation) {
                       return (
                         convertDistance(
-                          getDistance(location, {
+                          getDistance(userLocation, {
                             latitude: post.location.latitude,
                             longitude: post.location.longitude,
                           }),
@@ -114,6 +114,11 @@ const Home = () => {
                           userEmail={post.author.email}
                           userName={post.author.name}
                           id={post.id}
+                          userLocation={userLocation}
+                          coords={{
+                            latitude: post.location.latitude,
+                            longitude: post.location.longitude,
+                          }}
                         />
                       </div>
                     );
