@@ -5,6 +5,7 @@ import prisma from "../../../lib/prismadb";
 import { Navbar } from "../../../components/Navbar";
 import { HiLocationMarker, HiMail } from "react-icons/hi";
 import { PostCard } from "../../../components/PostCard";
+import { useRouter } from "next/router";
 
 interface ProfileProps {
   profile: any;
@@ -17,6 +18,8 @@ const Profile: NextPage<ProfileProps> = ({
   ownerIsViewing,
   posts,
 }) => {
+  const router = useRouter();
+
   return (
     <div className="space-y-10">
       <Navbar />
@@ -47,12 +50,19 @@ const Profile: NextPage<ProfileProps> = ({
       </div>
 
       <div className="mx-auto max-w-4xl">
-        <h1 className="mb-2 text-3xl font-black">{profile.name}'s Posts</h1>
+        <h1 className="mb-2 text-3xl font-black">
+          {profile.name}
+          {"'"}s Posts
+        </h1>
         {posts
           ? posts.length > 0
             ? posts.map((post: any, i: number) => {
                 return (
-                  <div key={i}>
+                  <div
+                    key={i}
+                    onClick={() => router.push(`/view/post/${post.id}`)}
+                    className="hover:cursor-pointer"
+                  >
                     <div className="flex w-full rounded-xl border-2 border-accent bg-[#f1fcf6]">
                       <div
                         style={{
