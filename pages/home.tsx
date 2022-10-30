@@ -27,7 +27,7 @@ const Home = () => {
           {/* TODO: dynamic data this later */}
           <span className="text-accent">Pleasanton</span>
         </h1>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-10">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4 lg:gap-12">
           {posts
             ? posts.length > 0
               ? posts.map((post, i) => {
@@ -39,6 +39,8 @@ const Home = () => {
                         pickUpLocation={post.location}
                         userPfp={post.author.image}
                         image={post.image}
+                        userEmail={post.author.email}
+                        userName={post.author.name}
                       />
                     </div>
                   );
