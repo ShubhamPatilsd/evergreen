@@ -14,15 +14,6 @@ interface IndividualPostProps {
 
 const IndividualPost: NextPage<IndividualPostProps> = ({ requestedPost }) => {
   const router = useRouter();
-  const [user, setUser] = useState<any>();
-
-  useEffect(() => {
-    (async () => {
-      const res = await fetch("/api/auth/me");
-      const data = await res.json();
-      setUser(data);
-    })();
-  }, []);
 
   return (
     <div className="space-y-10">
@@ -48,7 +39,9 @@ const IndividualPost: NextPage<IndividualPostProps> = ({ requestedPost }) => {
 
           <div
             className="space-y-3 pt-10 hover:cursor-pointer"
-            onClick={() => router.push(`/view/profile/${user.id}`)}
+            onClick={() =>
+              router.push(`/view/profile/${requestedPost.author.id}`)
+            }
           >
             <p className="text-base font-medium">Contact the gardener</p>
 
