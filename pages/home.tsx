@@ -82,52 +82,54 @@ const Home = () => {
           /> */}
         {/* </div> */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4 lg:gap-12">
-          {posts
-            ? posts.length > 0
-              ? posts
-                  .filter((post) => {
-                    if (userLocation) {
-                      return (
-                        convertDistance(
-                          getDistance(userLocation, {
-                            latitude: post.location.latitude,
-                            longitude: post.location.longitude,
-                          }),
-                          "mi"
-                        ) <= radius
-                      );
-                    } else {
-                      return false;
-                    }
-                  })
-                  .map((post, i) => {
-                    console.log(post);
-
+          {posts && posts.length > 0
+            ? posts
+                .filter((post) => {
+                  if (userLocation) {
                     return (
-                      <div key={i}>
-                        <PostCard
-                          name={post.name}
-                          price={post.price}
-                          pickUpLocation={post.location.formatted_name}
-                          userPfp={post.author.image}
-                          image={post.image}
-                          userEmail={post.author.email}
-                          userName={post.author.name}
-                          id={post.id}
-                          userLocation={userLocation}
-                          coords={{
-                            latitude: post.location.latitude,
-                            longitude: post.location.longitude,
-                          }}
-                        />
-                      </div>
+                      convertDistance(
+                        getDistance(userLocation, {
+                          latitude: post.location.latitude,
+                          longitude: post.location.longitude,
+                        }),
+                        "mi"
+                      ) <= radius
                     );
-                  })
-              : "No posts right now"
+                  } else {
+                    return false;
+                  }
+                })
+                .map((post, i) => {
+                  console.log(post);
+
+                  return (
+                    <div key={i}>
+                      <PostCard
+                        name={post.name}
+                        price={post.price}
+                        pickUpLocation={post.location.formatted_name}
+                        userPfp={post.author.image}
+                        image={post.image}
+                        userEmail={post.author.email}
+                        userName={post.author.name}
+                        id={post.id}
+                        userLocation={userLocation}
+                        coords={{
+                          latitude: post.location.latitude,
+                          longitude: post.location.longitude,
+                        }}
+                      />
+                    </div>
+                  );
+                })
             : ""}
 
           {/* {posts ? "" : "Loading..."} */}
-          {posts && posts.length === 0 ? "Loading..." : ""}
+          {!posts
+            ? "Loading..."
+            : posts.length === 0
+            ? "No posts to show right now"
+            : ""}
         </div>
       </div>
     </>
