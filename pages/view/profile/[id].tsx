@@ -4,13 +4,19 @@ import { authOptions } from "../../api/auth/[...nextauth]";
 import prisma from "../../../lib/prismadb";
 import { Navbar } from "../../../components/Navbar";
 import { HiLocationMarker, HiMail } from "react-icons/hi";
+import { PostCard } from "../../../components/PostCard";
 
 interface ProfileProps {
   profile: any;
   ownerIsViewing: boolean;
+  posts: any;
 }
 
-const Profile: NextPage<ProfileProps> = ({ profile, ownerIsViewing }) => {
+const Profile: NextPage<ProfileProps> = ({
+  profile,
+  ownerIsViewing,
+  posts,
+}) => {
   return (
     <div className="space-y-10">
       <Navbar />
@@ -38,6 +44,48 @@ const Profile: NextPage<ProfileProps> = ({ profile, ownerIsViewing }) => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="mx-auto max-w-4xl">
+        <h1 className="mb-2 text-3xl font-black">{profile.name}'s Posts</h1>
+        {posts
+          ? posts.length > 0
+            ? posts.map((post: any, i: number) => {
+                return (
+                  <div key={i}>
+                    <div className="flex w-full rounded-xl border-2 border-accent bg-[#f1fcf6]">
+                      <div
+                        style={{
+                          background: `url(${post.image}) no-repeat`,
+                          backgroundPosition: "50% 50%",
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                          width: "10rem",
+                          height: "10rem",
+                          backgroundColor: "#002a02",
+                        }}
+                        className="relative rounded-l-xl"
+                      ></div>
+                      <div className="space-y-2 p-4">
+                        <div>
+                          <h1 className="text-xl font-semibold">{post.name}</h1>
+                          <p className="font-semibold text-gray-700">
+                            {post.price}
+                          </p>
+                          <h4 className="text-xs font-bold uppercase text-gray-500">
+                            {post.location.formatted_name}
+                          </h4>
+                        </div>
+                        <p className="text-md max-w-2xl line-clamp-1">
+                          {post.description}{" "}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            : "No posts right now"
+          : "Loading..."}
       </div>
     </div>
   );
@@ -86,6 +134,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     });
 
+    let posts = await prisma.post.findMany({
+      where: {
+        userId: requestedProfile?.id,
+      },
+      include: {
+        location: true,
+        author: true,
+      },
+    });
+
+    posts = JSON.parse(JSON.stringify(posts));
+
     let ownerIsViewing = false;
     if (requestedProfile?.id === user.id) {
       ownerIsViewing = true;
@@ -95,6 +155,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {
         profile: requestedProfile,
         ownerIsViewing: ownerIsViewing,
+        posts: posts,
       },
     };
   }

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 //TODO: fix any
 const Home = () => {
   const [posts, setPosts] = useState<any[]>();
+  const [radius, setRadius] = useState(1.2);
 
   useEffect(() => {
     (async () => {
@@ -22,11 +23,38 @@ const Home = () => {
     <>
       <Navbar />
       <div className="mt-10 space-y-8 px-10 pb-6">
-        <h1 className="mx-auto max-w-2xl text-center text-4xl font-black">
+        <h1 className="mx-auto max-w-2xl text-center text-3xl font-black">
           Organic, local, and home-grown food in{" "}
           {/* TODO: dynamic data this later */}
-          <span className="text-accent">Pleasanton</span>
+          <span className="text-accent">Pleasanton</span> within{" "}
+          <input
+            type="number"
+            min="0.1"
+            max="5.0"
+            step="0.1"
+            onChange={(e) => {
+              setRadius(parseFloat(e.target.value));
+            }}
+            value={radius}
+            className="w-auto max-w-md rounded-lg bg-transparent px-4 py-1 text-right text-accent"
+          />{" "}
+          miles
         </h1>
+
+        {/* <div className="inline-flex w-full items-center space-x-4 rounded-xl border-2 border-accent bg-[#f1fcf6] p-4">
+          <p className="font-black">{radius} miles</p>
+
+          {/* <input
+            type="range"
+            min="0.1"
+            max="5.0"
+            step="0.1"
+            onChange={(e) => {
+              setRadius(parseFloat(e.target.value));
+            }}
+            value={radius}
+          /> */}
+        {/* </div> */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4 lg:gap-12">
           {posts
             ? posts.length > 0

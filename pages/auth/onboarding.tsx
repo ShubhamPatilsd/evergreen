@@ -108,14 +108,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     });
 
-    if (user?.onboarded) {
-      return {
-        redirect: {
-          destination: "/home",
-          permanent: false,
-        },
-      };
-    }
+    // if (user?.onboarded) {
+    //   return {
+    //     redirect: {
+    //       destination: "/home",
+    //       permanent: false,
+    //     },
+    //   };
+    // }
   }
   return {
     props: {},

@@ -1,0 +1,26 @@
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="range"]::-webkit-slider-thumb {
+    width: 15px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 15px;
+    cursor: ew-resize;
+    background: green;
+    width: 20px;
+    height: 20px;
+    box-shadow: -405px 0 0 400px green;
+    border-radius: 100%;
+    border: 3px solid white;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    position: relative;
+    box-sizing: border-box;
+    background-color: hsl(0deg, 0%, 90%);
+    width: 100%;
+    height: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+}
