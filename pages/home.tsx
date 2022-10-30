@@ -51,7 +51,7 @@ const Home = () => {
               setRadius(parseFloat(e.target.value));
             }}
             value={radius}
-            className="w-auto max-w-md rounded-lg bg-transparent px-4 py-1 text-right text-accent"
+            className="w-auto max-w-md rounded-lg bg-transparent px-1 py-1 text-right text-accent"
           />{" "}
           miles
         </h1>
