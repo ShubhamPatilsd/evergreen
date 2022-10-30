@@ -19,11 +19,13 @@ export default async function handle(
 
   const posts = await prisma.post.findMany({
     include: {
+      location: true,
       author: {
         select: {
           name: true,
           email: true,
           image: true,
+          location: true,
         },
       },
     },

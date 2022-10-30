@@ -55,8 +55,8 @@ export default async function handle(
           latitude: latitude,
           longitude: longitude,
           formatted_name: formattedName,
-          User: {
-            connect: [{ email: session?.user?.email || "" }],
+          Post: {
+            connect: [{ id: result.id }],
           },
         },
         include: {

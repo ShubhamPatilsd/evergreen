@@ -31,12 +31,14 @@ const Home = () => {
           {posts
             ? posts.length > 0
               ? posts.map((post, i) => {
+                  console.log(post);
+
                   return (
                     <div key={i}>
                       <PostCard
                         name={post.name}
                         price={post.price}
-                        pickUpLocation={post.location}
+                        pickUpLocation={post.location.formatted_name}
                         userPfp={post.author.image}
                         image={post.image}
                         userEmail={post.author.email}
