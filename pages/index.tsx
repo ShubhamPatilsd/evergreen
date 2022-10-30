@@ -26,8 +26,11 @@ export default function Home() {
       <div className="flex h-screen items-center justify-center">
         <div className="space-y-8">
           <h1 className="max-w-2xl text-center text-5xl font-black">
-            Organic, local, and home-grown food in your{" "}
-            <span className="text-accent">community</span>
+            <span className="text-accent">Organic</span>,{" "}
+            <span className="text-accent">local</span>, and{" "}
+            <span className="text-accent">home-grown</span> produce{" "}
+            {/* TODO: dynamic data this later */}
+            from your community.
           </h1>
           <div className="flex justify-center">
             <button

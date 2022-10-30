@@ -38,15 +38,17 @@ const Home = () => {
     <>
       <Navbar />
       <div className="mt-10 space-y-8 px-10 pb-2">
-        <h1 className="mx-auto max-w-2xl text-center text-3xl font-black">
-          Organic, local, and home-grown food in{" "}
+        <h1 className="mx-auto max-w-2xl text-center text-4xl font-black">
+          <span className="text-accent">Organic</span>,{" "}
+          <span className="text-accent">local</span>, and{" "}
+          <span className="text-accent">home-grown</span> produce{" "}
           {/* TODO: dynamic data this later */}
           within <span className="text-accent">{radius}</span> miles of you.
         </h1>
 
         <div className="justify-left flex">
           <div>
-            <p className="font-bold">Radius</p>
+            <p className="font-bold">Location Radius</p>
             <div className="flex items-center space-x-2">
               <p>0.1</p>
               <input
