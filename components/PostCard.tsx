@@ -43,14 +43,10 @@ export const PostCard: React.FC<PostCardProps> = ({
 
         <div className="mt-4">
           <div className="mb-1 flex items-center space-x-3">
-            {/* <img src={userPfp} className="mb-2 h-10 w-10 rounded-full" />
-          <div className="-space-y-1"> */}
-            {/* <p className="mb-1 text-xs font-bold text-gray-700"> */}
-            {/* {userName} */}
-            {/* • {userEmail} */}
-            {/* </p> */}
-            {/* // <p className="text-xs font-medium  text-gray-600">{userEmail}</p> */}
-            {/* </div> */}
+            <img src={userPfp} className="mb-2 h-10 w-10 rounded-full" />
+            <div className="-space-y-1">
+              <p className="text-sm font-medium  text-gray-600">{userName}</p>
+            </div>
           </div>
           <div>
             <h3 className="text-lg font-black">{name}</h3>
