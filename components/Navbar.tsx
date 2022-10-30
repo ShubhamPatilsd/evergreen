@@ -53,10 +53,10 @@ export const Navbar = () => {
               src={session?.user?.image || ""}
               className="h-12 w-12 rounded-full"
             />
-            <VscTriangleDown
+            {/* <VscTriangleDown
               size={18}
               className="absolute -right-1 bottom-0 text-accent"
-            />
+            /> */}
           </a>
         </div>
       </div>
