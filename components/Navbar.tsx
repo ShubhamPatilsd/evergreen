@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { buttonClasses } from "../classes/button";
 
 export const Navbar = () => {
   const { data: session, status } = useSession();
@@ -8,7 +7,7 @@ export const Navbar = () => {
 
   return (
     <div className="flex items-center justify-between px-4 py-2">
-      <h1 className="text-3xl">🌲</h1>
+      <h3 className="text-2xl font-semibold text-accent">evergreen</h3>
       <div className="flex items-center space-x-4">
         <button
           className="rounded-lg bg-accent px-4 py-1 font-bold text-white transition hover:bg-accent-darker"
