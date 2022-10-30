@@ -43,6 +43,9 @@ const IndividualPost: NextPage<IndividualPostProps> = ({ requestedPost }) => {
               router.push(`/view/profile/${requestedPost.author.id}`)
             }
           >
+            <p className="text-base font-medium text-gray-600">
+              {requestedPost.location.formatted_name}
+            </p>
             <p className="text-base font-medium">Contact the gardener</p>
 
             <div className="flex items-center ">
