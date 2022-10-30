@@ -62,7 +62,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   locationId    String?
-  phoneNumber   String
 }
 
 model Post {
