@@ -11,11 +11,11 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await unstable_getServerSession(req, res, authOptions);
-  if (!session) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
+  // const session = await unstable_getServerSession(req, res, authOptions);
+  // if (!session) {
+  //   res.status(401).send("Unauthorized");
+  //   return;
+  // }
 
   const posts = await prisma.post.findMany({
     include: {
