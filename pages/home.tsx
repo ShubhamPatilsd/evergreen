@@ -121,8 +121,8 @@ const Home = () => {
               : "No posts right now"
             : ""}
 
-          {posts ? "" : "Loading..."}
-          {posts && posts.length !== 0 ? "Loading..." : ""}
+          {/* {posts ? "" : "Loading..."} */}
+          {posts && posts.length === 0 ? "Loading..." : ""}
         </div>
       </div>
     </>
