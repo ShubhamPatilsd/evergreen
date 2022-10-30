@@ -113,6 +113,7 @@ const Home = () => {
                           image={post.image}
                           userEmail={post.author.email}
                           userName={post.author.name}
+                          id={post.id}
                         />
                       </div>
                     );
