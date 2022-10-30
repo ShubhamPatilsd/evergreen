@@ -81,9 +81,10 @@ export const CreatePost = () => {
           onClick={async () => {
             if (!parseFloat(price)) {
               //TODO: react toastify
+              console.log("goofy agh", price);
               return;
             }
-
+            console.log("i am here");
             const body = {
               name,
               description,

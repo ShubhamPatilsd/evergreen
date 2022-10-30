@@ -18,6 +18,7 @@ export default function Onboarding() {
     if (stage === 1 && name && location) {
       setStage(stage + 1);
     } else {
+      //TODO: toast
       console.log("no");
     }
   };

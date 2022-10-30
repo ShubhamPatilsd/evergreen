@@ -1,5 +1,9 @@
+import { GetServerSideProps } from "next";
+import { unstable_getServerSession } from "next-auth";
 import { Navbar } from "../components/Navbar";
 import { PostCard } from "../components/PostCard";
+import { authOptions } from "./api/auth/[...nextauth]";
+import prisma from "../lib/prismadb";
 
 const Home = () => {
   return (
@@ -20,3 +24,37 @@ const Home = () => {
 };
 //TODO: protect this page later
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  } else {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session?.user?.email || "",
+      },
+    });
+    if (!user?.onboarded) {
+      return {
+        redirect: {
+          destination: "/onboarding",
+          permanent: false,
+        },
+      };
+    }
+  }
+  return {
+    props: {},
+  };
+};
