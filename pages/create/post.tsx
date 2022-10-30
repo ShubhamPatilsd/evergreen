@@ -6,6 +6,7 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import prisma from "../../lib/prismadb";
 import { useRouter } from "next/router";
 import ReactGoogleAutocomplete from "react-google-autocomplete";
+import { useS3Upload } from "next-s3-upload";
 
 export const CreatePost = () => {
   const [name, setName] = useState("");
@@ -17,6 +18,14 @@ export const CreatePost = () => {
   const [formattedName, setFormattedName] = useState<string>("");
   const [latitude, setLatitude] = useState<string>("");
   const [longitude, setLongitude] = useState<string>("");
+
+  let [imageUrl, setImageUrl] = useState("");
+  let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
+
+  let handleFileChange = async (file: any) => {
+    let { url } = await uploadToS3(file);
+    setImageUrl(url);
+  };
 
   return (
     <div className="space-y-10">
@@ -93,6 +102,16 @@ export const CreatePost = () => {
             />
           </div>
         </div>
+        <div className="flex flex-col">
+          <label className="font-bold">Upload Image</label>
+          <div className="relative mt-1 rounded-md">
+            <FileInput onChange={handleFileChange} />
+
+            <button onClick={openFileDialog}>Browse files</button>
+
+            {imageUrl && <img src={imageUrl} />}
+          </div>
+        </div>
         <button
           onClick={async () => {
             try {
@@ -109,6 +128,7 @@ export const CreatePost = () => {
                 longitude,
                 formattedName,
                 latitude,
+                imageUrl,
               };
               await fetch(`/api/post/create`, {
                 method: "POST",

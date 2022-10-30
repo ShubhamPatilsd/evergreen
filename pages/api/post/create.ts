@@ -12,8 +12,15 @@ export default async function handle(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { name, description, price, latitude, longitude, formattedName } =
-      req.body;
+    const {
+      name,
+      description,
+      price,
+      latitude,
+      longitude,
+      formattedName,
+      imageUrl,
+    } = req.body;
 
     const image =
       "https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg";
@@ -50,7 +57,7 @@ export default async function handle(
           userId: user.id,
           price: `$${price}`,
           city: city,
-          image: image,
+          image: imageUrl,
           locationId: pickUpLocation.id,
         },
       });
