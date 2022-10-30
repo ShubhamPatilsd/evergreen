@@ -5,7 +5,7 @@ import { PostCard } from "../components/PostCard";
 import { authOptions } from "./api/auth/[...nextauth]";
 import prisma from "../lib/prismadb";
 import { useEffect, useState } from "react";
-import { getDistance } from "geolib";
+import { convertDistance, getDistance } from "geolib";
 
 interface LocationProps {
   latitude: number;
@@ -25,6 +25,7 @@ const Home = () => {
       setPosts(returnedPosts);
 
       navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position);
         setLocation({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -55,6 +56,8 @@ const Home = () => {
           miles
         </h1>
 
+        {/* {`${location?.latitude}, ${location?.longitude}`} */}
+
         {/* <div className="inline-flex w-full items-center space-x-4 rounded-xl border-2 border-accent bg-[#f1fcf6] p-4">
           <p className="font-black">{radius} miles</p>
 
@@ -70,16 +73,24 @@ const Home = () => {
           /> */}
         {/* </div> */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4 lg:gap-12">
-          {posts && location
+          {posts
             ? posts.length > 0
               ? posts
-                  .filter(
-                    (post) =>
-                      getDistance(location, {
-                        latitude: post.latitude,
-                        longitude: post.longitude,
-                      }) <= radius
-                  )
+                  .filter((post) => {
+                    if (location) {
+                      return (
+                        convertDistance(
+                          getDistance(location, {
+                            latitude: post.location.latitude,
+                            longitude: post.location.longitude,
+                          }),
+                          "mi"
+                        ) <= radius
+                      );
+                    } else {
+                      return false;
+                    }
+                  })
                   .map((post, i) => {
                     console.log(post);
 
