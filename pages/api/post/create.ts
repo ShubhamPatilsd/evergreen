@@ -12,7 +12,15 @@ export default async function handle(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { name, description, price, sellerLocation } = req.body;
+    const {
+      name,
+      description,
+      price,
+      sellerLocation,
+      latitude,
+      longitude,
+      formattedName,
+    } = req.body;
 
     const image =
       "https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg";
@@ -37,9 +45,23 @@ export default async function handle(
           description: description,
           userId: user.id,
           price: `$${price}`,
-          location: sellerLocation,
           city: city,
           image: image,
+        },
+      });
+
+      await prisma.location.create({
+        data: {
+          latitude: latitude,
+          longitude: longitude,
+          formatted_name: formattedName,
+          Post: {
+            connect: [{ id: result.id }],
+          },
+        },
+        include: {
+          Post: true,
+          User: true,
         },
       });
       res.json(result);

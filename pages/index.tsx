@@ -16,11 +16,16 @@ export default function Home() {
   return (
     <>
       <nav className="absolute p-6">
-        <h3 className="text-xl font-semibold">🌲 Evergreen</h3>
+        <h3
+          className="text-2xl font-semibold text-accent hover:cursor-pointer"
+          onClick={() => router.push("/home")}
+        >
+          evergreen
+        </h3>
       </nav>
       <div className="flex h-screen items-center justify-center">
         <div className="space-y-8">
-          <h1 className="max-w-2xl text-center text-4xl font-black">
+          <h1 className="max-w-2xl text-center text-5xl font-black">
             Organic, local, and home-grown food in your{" "}
             <span className="text-accent">community</span>
           </h1>
