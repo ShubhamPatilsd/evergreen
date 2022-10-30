@@ -37,12 +37,29 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String   @unique
   emailVerified DateTime?
   image         String?
   onboarded Boolean @default(false)
+  location String
+  city String
+  posts Post[]
   accounts      Account[]
   sessions      Session[]
+}
+
+model Post {
+  id String @id @default(cuid())
+  posted DateTime @default(now())
+  location String
+  city String
+  image String
+  description String
+  price String
+  author User @relation(fields: [userId], references: [id])
+  userId String
+  name String
+
 }
 
 model VerificationToken {
