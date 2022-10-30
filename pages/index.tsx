@@ -1,4 +1,3 @@
-import { buttonClasses } from "../classes/button";
 import { signIn } from "next-auth/react";
 
 export default function Home() {
@@ -18,7 +17,7 @@ export default function Home() {
               onClick={() => {
                 signIn("google");
               }}
-              className={buttonClasses}
+              className="rounded-lg bg-accent px-4 py-2 font-bold text-white transition hover:bg-accent-darker"
             >
               Get started
             </button>
