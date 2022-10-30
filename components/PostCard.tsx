@@ -1,33 +1,42 @@
-export const PostCard = () => {
+interface PostCardProps {
+  pickUpLocation: string;
+  price: string;
+  name: string;
+  userPfp: string;
+  image: string;
+}
+
+export const PostCard: React.FC<PostCardProps> = ({
+  price,
+  name,
+  image,
+  pickUpLocation,
+  userPfp,
+}) => {
   return (
     <div className="rounded-md">
       <div>
         <div
           style={{
-            background:
-              "url(https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg) no-repeat",
-            width: "300px",
+            background: `url(${"https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg"}) no-repeat`,
+            maxWidth: "300px",
             backgroundSize: "100%",
-            height: "300px",
+            maxHeight: "300px",
           }}
           className="relative rounded-xl"
-          // src="https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg"
         >
           <div className="translate absolute bottom-2 right-2 inline-flex w-auto rounded-full bg-white px-4 py-1 font-black text-black">
-            $2
+            {price}
           </div>
         </div>
       </div>
 
       <div className="mt-4">
-        <img
-          src="https://lh3.googleusercontent.com/a/ALm5wu27VEpf83lT4WPUOWLTH20YBVaGIXyUfk9eB4O8SA=s96-c"
-          className="mb-2 h-8 w-8 rounded-full"
-        />
+        <img src={userPfp} className="mb-2 h-8 w-8 rounded-full" />
         <div>
-          <h3 className="text-lg font-black">Lettuce</h3>
+          <h3 className="text-lg font-black">{name}</h3>
           <h4 className="text-xs font-bold uppercase text-gray-500">
-            5353 Sunol Blvd, Pleasanton
+            {pickUpLocation}
           </h4>
         </div>
       </div>

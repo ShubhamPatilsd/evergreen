@@ -4,9 +4,20 @@ import { Navbar } from "../components/Navbar";
 import { PostCard } from "../components/PostCard";
 import { authOptions } from "./api/auth/[...nextauth]";
 import prisma from "../lib/prismadb";
-import AutoComplete from "react-google-autocomplete";
+import { useEffect, useState } from "react";
 
+//TODO: fix any
 const Home = () => {
+  const [posts, setPosts] = useState<any[]>();
+
+  useEffect(() => {
+    (async () => {
+      const data = await fetch("/api/post/get/all");
+      const returnedPosts = await data.json();
+      setPosts(returnedPosts);
+    })();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -16,8 +27,24 @@ const Home = () => {
           {/* TODO: dynamic data this later */}
           <span className="text-accent">Pleasanton</span>
         </h1>
-        <div>
-          <PostCard />
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+          {posts
+            ? posts.length > 0
+              ? posts.map((post, i) => {
+                  return (
+                    <div key={i}>
+                      <PostCard
+                        name={post.name}
+                        price={post.price}
+                        pickUpLocation={post.location}
+                        userPfp={post.author.image}
+                        image={post.image}
+                      />
+                    </div>
+                  );
+                })
+              : "No posts right now"
+            : "Loading..."}
         </div>
       </div>
     </>
@@ -55,6 +82,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
   }
+
   return {
     props: {},
   };
