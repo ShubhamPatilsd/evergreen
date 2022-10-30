@@ -91,7 +91,6 @@ export const CreatePost = () => {
                 console.log("goofy agh", price);
                 return;
               }
-              console.log("i am here");
               const body = {
                 name,
                 description,
@@ -102,8 +101,9 @@ export const CreatePost = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
+              }).then(() => {
+                router.push("/home"); // change this to specific post
               });
-              router.push("/");
             } catch (err) {
               //TODO: add toast here
             }
