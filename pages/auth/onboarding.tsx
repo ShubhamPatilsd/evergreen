@@ -5,17 +5,15 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import prisma from "../../lib/prismadb";
 import { Stage1 } from "../../components/onboarding/Stage1";
 import { Stage2 } from "../../components/onboarding/Stage2";
-import { User } from "@prisma/client";
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Onboarding() {
   const [stage, setStage] = useState<number>(1);
   const [name, setName] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [userType, setUserType] = useState<"gardener" | "consumer">("gardener");
-  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  console.log(stage);
   const handleNext = () => {
     if (stage === 1 && name && location) {
       setStage(stage + 1);
@@ -24,10 +22,27 @@ export default function Onboarding() {
     }
   };
 
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    try {
+      const body = { name, userType, location };
+      await fetch(`/api/user`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      await router.push("/home");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="space-y-10 p-10">
       <div className="flex items-center justify-center">
-        <h3 className="text-2xl font-semibold text-accent">evergreen</h3>
+        <h3 className="text-2xl font-semibold text-accent">
+          evergreen <span className="text-black">onboarding</span>
+        </h3>
       </div>
 
       <div className="lg:px-[23rem]">
@@ -47,7 +62,7 @@ export default function Onboarding() {
         <div className="flex w-full flex-col px-10">
           <button
             type="button"
-            onClick={handleNext}
+            onClick={stage === 1 ? handleNext : handleSubmit}
             className="w-full rounded-lg bg-accent py-4 text-white"
           >
             <div className="flex flex-row items-center justify-center">

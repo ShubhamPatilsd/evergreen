@@ -41,14 +41,14 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String   @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   onboarded Boolean @default(false)
-  location String
-  city String
+  location String?
+  city String?
   posts Post[]
-  userType UserType
+  userType UserType?
   accounts      Account[]
   sessions      Session[]
 }
