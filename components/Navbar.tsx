@@ -8,13 +8,13 @@ export const Navbar = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [active, setActive] = useState(false);
-  const [id, setId] = useState("");
+  const [user, setUser] = useState<any>();
 
   useEffect(() => {
     (async () => {
       const res = await fetch("/api/auth/me");
       const data = await res.json();
-      setId(data.id);
+      setUser(data);
     })();
   }, []);
 
@@ -27,12 +27,16 @@ export const Navbar = () => {
         evergreen
       </h3>
       <div className="flex items-center space-x-4">
-        <button
-          className="rounded-lg bg-accent px-4 py-1 font-bold text-white transition hover:bg-accent-darker"
-          onClick={() => router.push("/create/post")}
-        >
-          Create a post
-        </button>
+        {user.userType == "gardener" ? (
+          <button
+            className="rounded-lg bg-accent px-4 py-1 font-bold text-white transition hover:bg-accent-darker"
+            onClick={() => router.push("/create/post")}
+          >
+            Create a post
+          </button>
+        ) : (
+          ""
+        )}
 
         <button
           onClick={() => {
@@ -44,7 +48,7 @@ export const Navbar = () => {
         </button>
 
         <div className="relative">
-          <a href={`/view/profile/${id}`}>
+          <a href={`/view/profile/${user?.id as any}`}>
             <img
               src={session?.user?.image || ""}
               className="h-12 w-12 rounded-full"
