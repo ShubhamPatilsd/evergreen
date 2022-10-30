@@ -95,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (user?.onboarded) {
       return {
         redirect: {
-          destination: "/dashboard",
+          destination: "/home",
           permanent: false,
         },
       };

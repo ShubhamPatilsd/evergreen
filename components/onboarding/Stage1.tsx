@@ -1,3 +1,5 @@
+import ReactGoogleAutocomplete from "react-google-autocomplete";
+
 export const Stage1: React.FC<{
   name: string;
   setName: any;
@@ -23,12 +25,15 @@ export const Stage1: React.FC<{
       </div>
       <div id="input" className="my-5 flex w-full flex-col">
         <label className="mb-2 text-gray-700">Location</label>
-        <input
-          type="text"
+        <ReactGoogleAutocomplete
           placeholder="San Francisco, California"
           className="appearance-none rounded-lg border-2 border-gray-100 px-4 py-3 placeholder-gray-300  focus:outline-none focus:ring-2 focus:ring-accent"
-          value={location}
-          onChange={(event) => setLocation(event.target.value)}
+          apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}
+          onPlaceSelected={(place) => setLocation(place)}
+          defaultValue={location}
+          options={{
+            types: ["geocode", "establishment"],
+          }}
         />
       </div>
     </div>

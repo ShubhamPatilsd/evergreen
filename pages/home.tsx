@@ -4,6 +4,7 @@ import { Navbar } from "../components/Navbar";
 import { PostCard } from "../components/PostCard";
 import { authOptions } from "./api/auth/[...nextauth]";
 import prisma from "../lib/prismadb";
+import AutoComplete from "react-google-autocomplete";
 
 const Home = () => {
   return (
