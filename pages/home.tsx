@@ -119,7 +119,10 @@ const Home = () => {
                     );
                   })
               : "No posts right now"
-            : "Loading..."}
+            : ""}
+
+          {posts ? "" : "Loading..."}
+          {posts && posts.length !== 0 ? "Loading..." : ""}
         </div>
       </div>
     </>
