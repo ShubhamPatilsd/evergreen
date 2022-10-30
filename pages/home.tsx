@@ -5,17 +5,31 @@ import { PostCard } from "../components/PostCard";
 import { authOptions } from "./api/auth/[...nextauth]";
 import prisma from "../lib/prismadb";
 import { useEffect, useState } from "react";
+import { getDistance } from "geolib";
+
+interface LocationProps {
+  latitude: number;
+  longitude: number;
+}
 
 //TODO: fix any
 const Home = () => {
   const [posts, setPosts] = useState<any[]>();
   const [radius, setRadius] = useState(1.2);
+  const [location, setLocation] = useState<LocationProps | null>();
 
   useEffect(() => {
     (async () => {
       const data = await fetch("/api/post/get/all");
       const returnedPosts = await data.json();
       setPosts(returnedPosts);
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
     })();
   }, []);
 
@@ -56,25 +70,33 @@ const Home = () => {
           /> */}
         {/* </div> */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-4 lg:gap-12">
-          {posts
+          {posts && location
             ? posts.length > 0
-              ? posts.map((post, i) => {
-                  console.log(post);
+              ? posts
+                  .filter(
+                    (post) =>
+                      getDistance(location, {
+                        latitude: post.latitude,
+                        longitude: post.longitude,
+                      }) <= radius
+                  )
+                  .map((post, i) => {
+                    console.log(post);
 
-                  return (
-                    <div key={i}>
-                      <PostCard
-                        name={post.name}
-                        price={post.price}
-                        pickUpLocation={post.location.formatted_name}
-                        userPfp={post.author.image}
-                        image={post.image}
-                        userEmail={post.author.email}
-                        userName={post.author.name}
-                      />
-                    </div>
-                  );
-                })
+                    return (
+                      <div key={i}>
+                        <PostCard
+                          name={post.name}
+                          price={post.price}
+                          pickUpLocation={post.location.formatted_name}
+                          userPfp={post.author.image}
+                          image={post.image}
+                          userEmail={post.author.email}
+                          userName={post.author.name}
+                        />
+                      </div>
+                    );
+                  })
               : "No posts right now"
             : "Loading..."}
         </div>
