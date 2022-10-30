@@ -5,12 +5,25 @@ import prisma from "../../../lib/prismadb";
 import { Navbar } from "../../../components/Navbar";
 import { HiLocationMarker, HiMail } from "react-icons/hi";
 import { PostCard } from "../../../components/PostCard";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface IndividualPostProps {
   requestedPost: any;
 }
 
 const IndividualPost: NextPage<IndividualPostProps> = ({ requestedPost }) => {
+  const router = useRouter();
+  const [user, setUser] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("/api/auth/me");
+      const data = await res.json();
+      setUser(data);
+    })();
+  }, []);
+
   return (
     <div className="space-y-10">
       <Navbar />
@@ -31,19 +44,28 @@ const IndividualPost: NextPage<IndividualPostProps> = ({ requestedPost }) => {
           <p className="mt-3 text-sm text-gray-700 md:text-base">
             {requestedPost.description}
           </p>
-          <div className="flex items-center pt-10">
-            <img
-              className="h-10 w-10 rounded-full object-cover object-center"
-              src={requestedPost.author.image}
-              alt=""
-            />
-            <div className="mx-4">
-              <h1 className="text-sm font-semibold text-gray-700">
-                {requestedPost.author.name}
-              </h1>
-              <p className="text-sm text-gray-500">
-                {requestedPost.author.email}
-              </p>
+          <div></div>
+
+          <div
+            className="space-y-3 pt-10 hover:cursor-pointer"
+            onClick={() => router.push(`/view/profile/${user.id}`)}
+          >
+            <p className="text-base font-medium">Contact the gardener</p>
+
+            <div className="flex items-center ">
+              <img
+                className="h-10 w-10 rounded-full object-cover object-center"
+                src={requestedPost.author.image}
+                alt=""
+              />
+              <div className="mx-4">
+                <h1 className="text-sm font-semibold text-gray-700">
+                  {requestedPost.author.name}
+                </h1>
+                <p className="text-sm text-gray-500">
+                  {requestedPost.author.email}
+                </p>
+              </div>
             </div>
           </div>
         </div>

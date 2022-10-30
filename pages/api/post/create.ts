@@ -22,10 +22,6 @@ export default async function handle(
       imageUrl,
     } = req.body;
 
-    const image =
-      "https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg";
-    const city = "Pleasanton";
-
     const session = await unstable_getServerSession(req, res, authOptions);
     if (session) {
       const user = await prisma.user.findUnique({
@@ -56,7 +52,6 @@ export default async function handle(
           description: description,
           userId: user.id,
           price: `$${price}`,
-          city: city,
           image: imageUrl,
           locationId: pickUpLocation.id,
         },

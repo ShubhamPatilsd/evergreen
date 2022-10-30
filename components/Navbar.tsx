@@ -7,7 +7,6 @@ import { HiOutlineLogout } from "react-icons/hi";
 export const Navbar = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [active, setActive] = useState(false);
   const [user, setUser] = useState<any>();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export const Navbar = () => {
         evergreen
       </h3>
       <div className="flex items-center space-x-4">
-        {user.userType == "gardener" ? (
+        {user && user.userType == "gardener" ? (
           <button
             className="rounded-lg bg-accent px-4 py-1 font-bold text-white transition hover:bg-accent-darker"
             onClick={() => router.push("/create/post")}
