@@ -12,15 +12,8 @@ export default async function handle(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const {
-      name,
-      description,
-      price,
-      sellerLocation,
-      latitude,
-      longitude,
-      formattedName,
-    } = req.body;
+    const { name, description, price, latitude, longitude, formattedName } =
+      req.body;
 
     const image =
       "https://images.pexels.com/photos/2893639/pexels-photo-2893639.jpeg";
@@ -38,6 +31,17 @@ export default async function handle(
         res.status(500).send("User not found");
         return;
       }
+      const pickUpLocation = await prisma.location.create({
+        data: {
+          latitude: latitude,
+          longitude: longitude,
+          formatted_name: formattedName,
+        },
+        include: {
+          Post: true,
+          User: true,
+        },
+      });
 
       const result = await prisma.post.create({
         data: {
@@ -47,23 +51,10 @@ export default async function handle(
           price: `$${price}`,
           city: city,
           image: image,
+          locationId: pickUpLocation.id,
         },
       });
 
-      await prisma.location.create({
-        data: {
-          latitude: latitude,
-          longitude: longitude,
-          formatted_name: formattedName,
-          Post: {
-            connect: [{ id: result.id }],
-          },
-        },
-        include: {
-          Post: true,
-          User: true,
-        },
-      });
       res.json(result);
     } else {
       res.status(401).send({ message: "Unauthorized" });
