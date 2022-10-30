@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../lib/prismadb";
-import { getSession } from "next-auth/react";
+import prisma from "../../../lib/prismadb";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
-export default async function handle(
+export default async function Handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { name, userType, location } = req.body;
-  const session = await getSession();
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   console.log(session?.user);
 

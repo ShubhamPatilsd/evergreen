@@ -44,7 +44,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  onboarded Boolean @default(false)
+  onboarded Boolean? @default(false)
   location String?
   city String?
   posts Post[]
